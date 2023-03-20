@@ -7,6 +7,12 @@
 - Easy to remove [adverse noise](https://arxiv.org/abs/1412.6572) from a single image
 - Batch processing that can remove noise from multiple images.
 
+# Screenshots
+
+![screenshot1](./screenshots/screenshot1.jpg)
+
+![screenshot2](./screenshots/screenshot2.jpg)
+
 # Related links
 
 - [As a script extension](https://github.com/gogodr/AdverseCleanerExtension)
