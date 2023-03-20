@@ -4,7 +4,7 @@
 
 # Features
 
-- Easy to remove [adverse noise](https://arxiv.org/abs/1412.6572) from a single image
+- Easy to remove [adversarial noise](https://arxiv.org/abs/1412.6572) from a single image
 - Batch processing that can remove noise from multiple images.
 
 # Screenshots
