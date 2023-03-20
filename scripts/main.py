@@ -3,13 +3,15 @@ import cv2
 from PIL import Image
 from pathlib import Path
 import os
+import json
 
 from cv2.ximgproc import guidedFilter
 
 import gradio as gr
 import launch
-from modules import script_callbacks, ui
+from modules import script_callbacks # scripts
 
+# script_dir = Path(scripts.basedir())
 
 def clean_image(
     input_image: Image,
@@ -95,7 +97,7 @@ def send_to_input(output):
 def clear_output():
     return None
 
-def ui():
+def on_ui_tabs():
     with gr.Blocks() as app:
         with gr.Tabs():
             with gr.TabItem(label="Single"):
@@ -220,5 +222,5 @@ def ui():
 
     return [(app, "Adverse Cleaner", "adverse_cleaner_tab")]
 
-script_callbacks.on_ui_tabs(ui)
+script_callbacks.on_ui_tabs(on_ui_tabs)
 
