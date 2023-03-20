@@ -8,7 +8,7 @@ from cv2.ximgproc import guidedFilter
 
 import gradio as gr
 import launch
-from modules import script_callbacks, on_ui_tabs
+from modules import script_callbacks
 
 
 def clean_image(
@@ -30,7 +30,7 @@ def clean_image(
         y = guidedFilter(img, y, radius, eps)
 
     output_image = Image.fromarray(y.clip(0, 255).astype(np.uint8))
-    return output_image
+    return [input_image, output_image]
 
 def batch_process(
         input_dir: str,
@@ -62,7 +62,7 @@ def batch_process(
 
                 img = Image.open(f)
 
-                cleaned_image = clean_image(
+                _, cleaned_image = clean_image(
                     img,
                     diameter,
                     sigma_color,
@@ -93,7 +93,7 @@ def send_to_input(output):
     return output
 
 def clear_output():
-    return None
+    return [None, None]
 
 def on_ui_tabs():
     with gr.Blocks() as app:
@@ -105,9 +105,15 @@ def on_ui_tabs():
                         start_btn = gr.Button(value="Start", variant="primary")
 
                     with gr.Column():
-                        output_image = gr.Image(
-                            type="pil", label="Output Image", interactive=False
-                        )
+                        with gr.Row ():  
+                            input_preview = gr.Image(
+                                type="pil", 
+                                label="Input Preview",
+                                interactive=False
+                            )
+                            output_image = gr.Image(
+                                type="pil", label="Output Image", interactive=False
+                            )
                         send_to_input_btn = gr.Button(value="Use as input", variant="secondary")
                         clear_output_btn = gr.Button(value="Clear output", variant="secondary")
 
@@ -198,7 +204,7 @@ def on_ui_tabs():
                 radius_slider,
                 eps_slider,
             ],
-            outputs=[output_image],
+            outputs=[input_preview, output_image],
         )
         batch_start_btn.click(
             fn=batch_process,
@@ -216,7 +222,7 @@ def on_ui_tabs():
         send_to_input_btn.click(
             fn=send_to_input, inputs=[output_image], outputs=[input_image]
         )
-        clear_output_btn.click(fn=clear_output, outputs=[output_image])
+        clear_output_btn.click(fn=clear_output, outputs=[input_preview, output_image])
 
     return [(app, "Adverse Cleaner", "adverse_cleaner_tab")]
 
