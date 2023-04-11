@@ -12,12 +12,12 @@ from modules import script_callbacks
 
 
 def clean_image(
-    input_image: Image,
-    diameter: float = 5,
-    sigma_color: float = 8,
-    sigma_space: float = 8,
-    radius: float = 4,
-    eps: float = 16,
+    input_image, #: Image,
+    diameter, #: float = 5,
+    sigma_color, #: float = 8,
+    sigma_space, #: float = 8,
+    radius, #: float = 4,
+    eps, #: float = 16,
 ) -> Image:
 
     img = np.array(input_image).astype(np.float32)
@@ -33,13 +33,13 @@ def clean_image(
     return [input_image, output_image]
 
 def batch_process(
-        input_dir: str,
-        output_dir: str,
-        diameter: float = 5,
-        sigma_color: float = 8,
-        sigma_space: float = 8,
-        radius: float = 4,
-        eps: float = 16,
+        input_dir, #: str,
+        output_dir, #: str,
+        diameter, #: float = 5,
+        sigma_color, #: float = 8,
+        sigma_space, #: float = 8,
+        radius, #: float = 4,
+        eps, #: float = 16,
     ):
         print("Batch cleaning started")
         try:
