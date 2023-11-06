@@ -4,10 +4,18 @@ from PIL import Image
 from pathlib import Path
 import os
 
-from cv2.ximgproc import guidedFilter
+try:
+    from cv2.ximgproc import guidedFilter
+except ImportError as e:
+    print(f'''{e}
+=====================================================================
+Failed to import cv2.ximgproc Adverse Cleaner will not function
+You will need to install opencv-contrib-python manually
+Read Adverse Cleaner README.md for instructions
+https://github.com/p1atdev/stable-diffusion-webui-adverse-cleaner-tab
+=====================================================================''')
 
 import gradio as gr
-import launch
 from modules import script_callbacks
 
 
@@ -97,6 +105,24 @@ def clear_output():
 
 def on_ui_tabs():
     with gr.Blocks() as app:
+        try:
+            from cv2.ximgproc import guidedFilter
+        except ImportError:
+            gr.Markdown('''# Failed to import cv2.ximgproc Adverse Cleaner will not function
+You need to manually install `opencv-contrib-python` because the webui uses opencv-python, so the extension can't modify the opencv package while running.
+### instructions
+open the stable-diffusion-webui folder in terminal.
+```bash
+cd /path/to/stable-diffusion-webui
+```
+Activate venv,
+```bash
+./venv/Scripts/activate
+```
+Install `opencv-contrib-python`
+```
+pip install opencv-contrib-python
+```''')
         with gr.Tabs():
             with gr.TabItem(label="Single"):
                 with gr.Row ():  
